@@ -3,7 +3,7 @@ import pathlib
 from pyaoc.utils import Day
 import time
 
-YEAR = "2019"
+YEAR = "2023"
 
 for i in range(1, 26):
     name = f"day{i:02}"
