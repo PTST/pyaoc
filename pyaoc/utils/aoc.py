@@ -35,8 +35,10 @@ def get_input_array_int(day: int, year, sep=",") -> list[int]:
     return [int(x) for x in get_input_array(day, year, sep)]
 
 
-def get_input_array_class(day: int, year, cls: T, sep=",") -> list[T]:
-    return [cls(x) for x in get_input_array(day, year, sep)]
+def get_input_array_class(day: int, year, cls: T, sep=",", args=None) -> list[T]:
+    if not args:
+        args = {}
+    return [cls(x, **args) for x in get_input_array(day, year, sep)]
 
 
 def read_file(path: pathlib.Path) -> str:
