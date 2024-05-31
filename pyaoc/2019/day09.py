@@ -1,6 +1,7 @@
 from pyaoc.utils import Day, Computer
 from itertools import permutations
 
+
 class Day09(Day):
     def __init__(self):
         super().__init__(9, 2019)
@@ -16,6 +17,7 @@ class Day09(Day):
         comp = Computer(input, inputs=[2])
         comp.run()
         return comp.latest_output
+
 
 day = Day09()
 

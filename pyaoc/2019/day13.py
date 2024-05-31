@@ -1,12 +1,14 @@
 from pyaoc.utils import Day, Computer
 from enum import Enum
 
+
 class Tile(Enum):
     EMPTY = 0
     WALL = 1
     BLOCK = 2
     PADDLE = 3
     BALL = 4
+
 
 class Arcade(object):
     screen: list[list[Tile]]
@@ -55,17 +57,26 @@ class Arcade(object):
         if self.screen is None:
             max_x = max(self.computer.outputs[::3])
             max_y = max(self.computer.outputs[1::3])
-            self.screen = [[Tile.EMPTY for __ in range(max_x+1)] for _ in range(max_y+1)]
-        for (x, y, z) in [(self.computer.outputs[(i*3)], self.computer.outputs[(i*3)+1], self.computer.outputs[(i*3)+2]) for i, _ in enumerate(self.computer.outputs[::3])]:
+            self.screen = [
+                [Tile.EMPTY for __ in range(max_x + 1)] for _ in range(max_y + 1)
+            ]
+        for x, y, z in [
+            (
+                self.computer.outputs[(i * 3)],
+                self.computer.outputs[(i * 3) + 1],
+                self.computer.outputs[(i * 3) + 2],
+            )
+            for i, _ in enumerate(self.computer.outputs[::3])
+        ]:
             if x == -1:
                 self.score = z
                 continue
 
             tile = Tile(z)
             self.screen[y][x] = tile
-            if (tile == Tile.BALL):
+            if tile == Tile.BALL:
                 self.ball_position = (x, y)
-            elif (tile == Tile.PADDLE):
+            elif tile == Tile.PADDLE:
                 self.paddle_position = (x, y)
         if self.print_frame:
             self.print_screen()
@@ -75,7 +86,7 @@ class Arcade(object):
             print("".join([self.tile_to_ascii(t) for t in line]))
 
     def tile_to_ascii(self, tile: Tile):
-        match(tile):
+        match (tile):
             case Tile.EMPTY:
                 return " "
             case Tile.WALL:
@@ -90,10 +101,13 @@ class Arcade(object):
     def slope(self):
         if self.prev_ball_position is None:
             return 1
-        slope = (self.ball_position[0] - self.prev_ball_position[0], self.ball_position[1] - self.prev_ball_position[1])
+        slope = (
+            self.ball_position[0] - self.prev_ball_position[0],
+            self.ball_position[1] - self.prev_ball_position[1],
+        )
         predictedX = self.ball_position[0]
         if slope[1] > 0:
-            predictedX += slope[0]*(self.paddle_position[1]-self.ball_position[1])
+            predictedX += slope[0] * (self.paddle_position[1] - self.ball_position[1])
         if predictedX > self.paddle_position[0]:
             return 1
         if predictedX == self.paddle_position[0]:
@@ -102,7 +116,6 @@ class Arcade(object):
             return 0
         return -1
 
-
     def ball_prediction(self):
         if self.prev_ball_position is None:
             return None
@@ -110,7 +123,9 @@ class Arcade(object):
         cur_x, cur_y = self.ball_position
         while cur_y < self.paddle_position[1]:
             tmp_x, tmp_y = (cur_x, cur_y)
-            cur_x, cur_y = self.calc_next_frame_position((prev_x, prev_y), (cur_x, cur_y))
+            cur_x, cur_y = self.calc_next_frame_position(
+                (prev_x, prev_y), (cur_x, cur_y)
+            )
             prev_x, prev_y = (tmp_x, tmp_y)
         self.ball_pred = (cur_x, cur_y)
         return cur_x
@@ -125,7 +140,6 @@ class Arcade(object):
             return 1
         return -1
 
-
     def calc_next_frame_position(self, prev_position, cur_position):
         prev_x, prev_y = prev_position
         cur_x, cur_y = cur_position
@@ -134,16 +148,16 @@ class Arcade(object):
         going_right = cur_x > prev_x
 
         if going_down:
-            next_y+=1
+            next_y += 1
         else:
-            next_y-=1
+            next_y -= 1
 
         next_tile = self.screen[next_y][next_x]
         if next_tile == Tile.BLOCK:
             if going_down:
-                next_y-=2
+                next_y -= 2
             else:
-                next_y+=2
+                next_y += 2
         if going_right:
             next_x += 1
         else:
@@ -155,14 +169,11 @@ class Arcade(object):
                 pass
             case Tile.BLOCK:
                 next_y -= 1
-                next_x = next_x+1 if going_right else next_x-1
+                next_x = next_x + 1 if going_right else next_x - 1
             # case _ :
             #     raise NotImplementedError(next_tile)
 
         return (next_x, next_y)
-
-
-
 
 
 class Day13(Day):
@@ -183,6 +194,7 @@ class Day13(Day):
         arcade = Arcade(comp)
         arcade.simulate()
         return arcade.score
+
 
 day = Day13()
 

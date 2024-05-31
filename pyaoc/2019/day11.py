@@ -1,15 +1,18 @@
 from pyaoc.utils import Day, Computer
 from enum import Enum
 
+
 class Direction(Enum):
     UP = 0
     RIGHT = 1
     DOWN = 2
     LEFT = 3
 
+
 class Turn(Enum):
     LEFT = 0
     RIGHT = 1
+
 
 class Robot(object):
     computer: Computer
@@ -41,7 +44,7 @@ class Robot(object):
             output.append(text)
 
         start_index = min([x.index("#") for x in output])
-        end_index = min([len(x) - x[::-1].index("#") for x in output])+1
+        end_index = min([len(x) - x[::-1].index("#") for x in output]) + 1
         full_text = "\n".join([x[start_index:end_index] for x in output])
         return full_text
 
@@ -83,7 +86,6 @@ class Robot(object):
                 self.x -= 1
 
 
-
 class Day11(Day):
     def __init__(self):
         super().__init__(11, 2019)
@@ -107,4 +109,4 @@ day = Day11()
 
 if __name__ == "__main__":
     print("Part1", day.part_1())
-    print("Part2:", "\n"+day.part_2())
+    print("Part2:", "\n" + day.part_2())

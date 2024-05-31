@@ -1,9 +1,11 @@
 from pyaoc.utils import Day
 import re
-class Race():
+
+
+class Race:
     time: int
     distance: int
-    number_of_wins:int
+    number_of_wins: int
 
     def __init__(self, time: int, distance: int):
         self.number_of_wins = 0
@@ -20,11 +22,11 @@ class Race():
                 upper_bound = i
                 break
 
-        self.number_of_wins = upper_bound - lower_bound +1
+        self.number_of_wins = upper_bound - lower_bound + 1
 
     def race(self, time_to_hold: int, total_time: int):
-        speed = time_to_hold*1
-        return speed * (total_time-time_to_hold) # distance
+        speed = time_to_hold * 1
+        return speed * (total_time - time_to_hold)  # distance
 
 
 class Day06(Day):
@@ -33,7 +35,7 @@ class Day06(Day):
 
     def part_1(self):
         input = self.get_input().split("\n")
-        data = [tuple(int(y.group(0)) for y in re.finditer("\d+", x)) for x in input ]
+        data = [tuple(int(y.group(0)) for y in re.finditer("\d+", x)) for x in input]
         races = [Race(time, dist) for time, dist in list(zip(data[0], data[1]))]
         result = 1
         for race in races:

@@ -1,5 +1,6 @@
 from pyaoc.utils import Day, Computer
 
+
 class Day02(Day):
     def __init__(self):
         super().__init__(2, 2019)

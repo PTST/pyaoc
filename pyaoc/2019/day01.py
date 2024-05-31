@@ -1,5 +1,7 @@
 from pyaoc.utils import Day
 import math
+
+
 class Day01(Day):
     def __init__(self):
         super().__init__(1, 2019)
@@ -20,8 +22,8 @@ class Day01(Day):
             fuel = self.calc_fuel(fuel)
         return total_fuel
 
-
     def calc_fuel(self, module) -> int:
         return math.floor(module / 3) - 2
+
 
 day = Day01()

@@ -1,18 +1,19 @@
 from pyaoc.utils import Day, Computer
 from itertools import permutations
 
+
 class Day07(Day):
     def __init__(self):
         super().__init__(7, 2019)
 
     def part_1(self):
         input = self.get_input_array_int()
-        possibilities = permutations([0,1,2,3,4])
+        possibilities = permutations([0, 1, 2, 3, 4])
         return max([Day07.calc_amplified_trust(x, input) for x in possibilities])
 
     def part_2(self):
         input = self.get_input_array_int()
-        possibilities = permutations([5,6,7,8,9])
+        possibilities = permutations([5, 6, 7, 8, 9])
         return max([Day07.calc_amplified_trust_2(x, input) for x in possibilities])
 
     @classmethod
